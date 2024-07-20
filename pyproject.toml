@@ -7,6 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+click = "^8.1.7"
+spacy = "^3.7.5"
+pymupdf = "^1.24.7"
+requests = "^2.32.3"
 
 
 [build-system]
