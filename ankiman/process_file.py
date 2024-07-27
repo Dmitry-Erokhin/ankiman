@@ -17,6 +17,9 @@ You need to create CSV file from them with following columns (in brackets examnp
 - `plural_postfix` - only for nouns: postfixin plural form (` -e`, ``)
 - `article` - only for nouns: definitive article (`der`, ``)
 - `translation` - translation to english (`main train station`, `to stop`)
+- `-` - empty column
+- `-` - empty column
+- `-` - empty column
 - `example` - example in german (`Treffen wir uns am Hauptbahnhof?`, `Es hört nicht auf zu schneien.`)
 - `example_translation` - translation to english of example in German (`Do we meet at the main station?`, `It does not stop snowing.`)
 - `-` - empty column
