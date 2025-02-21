@@ -1,6 +1,4 @@
-#!/usr/bin/env python
 import re
-import click
 import spacy
 import requests
 import fitz
@@ -37,6 +35,14 @@ base|full|plural_postfix|article|translation|-|-|-|example|example_translation|-
 Hauptbahnhof|der Hauptbahnhof, -e|-e|der|main train station|-|-|-|Treffen wir uns am Hauptbahnhof?|Do we meet at the main station?|||||%tags%
 aufhören|aufhören, hört auf, hörte auf, hat aufgehört|||to stop|-|-|-|Es hört nicht auf zu schneien.|It does not stop snowing.|||||%tags%
 ```"""
+
+def ensure_spacy_model():
+    try:
+        spacy.load("de_core_news_lg")
+    except OSError:
+        print("Downloading spaCy model de_core_news_lg...")
+        spacy.cli.download("de_core_news_lg")
+
 
 def read_pdf(file_path):
     """Read text from a PDF file using PyMuPDF."""
@@ -110,9 +116,9 @@ def create_chatgpt_prompts(words_absent, tags, batch_size):
         prompts.append(prompt)
     return prompts
 
-
 def run_process_file(file, deck, tags, batch):
     """Process the file, integrate with Anki, and output ChatGPT prompts."""
+    ensure_spacy_model()
     if file.lower().endswith('.pdf'):
         text = read_pdf(file)
     elif file.lower().endswith('.txt'):
@@ -138,17 +144,6 @@ def run_process_file(file, deck, tags, batch):
         print(f"==============Prompt #{i} of {len(prompts)}==============")
         print(prompt)
         print("==========================================================\n")
-
-@click.command()
-@click.option('-f', '--file', required=True, type=click.Path(exists=True), help='Path to PDF or TXT file')
-@click.option('-d', '--deck', required=True, help='Name of the resulting deck')
-@click.option('-t', '--tags', multiple=True, required=True, help='Tags to add')
-@click.option('-b', '--batch', default=100, help='Prompt batch size')
-def main(file, deck, tags, batch):
-    run_process_file(file, deck, tags, batch)
-
-if __name__ == "__main__":
-    main()
 
 # For testing purposes
 if __name__ == "__main__":
