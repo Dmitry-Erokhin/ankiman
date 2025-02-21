@@ -11,7 +11,7 @@ A CLI tool for managing German vocabulary in Anki.
 
 ## Prerequisites
 
-- Python 3.9 or higher
+- Python 3.9 or higher up to 3.13 (exclusive)
 - Anki with [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on installed
 - Anki must be running when using Ankiman
 

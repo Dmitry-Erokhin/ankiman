@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ankiman"
-version = "1.1.0"
+version = "1.2.0"
 description = "A CLI tool for managing German vocabulary in Anki"
 authors = ["Dmitry Erokhin <dmitry.erokhin@gmail.com>"]
 license = "MIT"
@@ -19,7 +19,7 @@ packages = [{include = "ankiman"}]
 repository = "https://github.com/Dmitry-Erokhin/ankiman"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.12"
+python = ">=3.8,<3.13"
 click = "^8.1.7"
 spacy = "^3.7.5"
 pymupdf = "^1.24.7"
