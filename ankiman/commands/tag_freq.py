@@ -61,16 +61,12 @@ def update_note_tags(note_id, tags_to_add, prefix):
     
     # Add new frequency tags
     updated_tags.extend(tags_to_add)
-    
-    # Update the note
     payload = {
-        "action": "updateNoteFields",
+        "action": "updateNoteTags",
         "version": 6,
         "params": {
-            "note": {
-                "id": note_id,
-                "tags": updated_tags
-            }
+            "note": note_id,
+            "tags": updated_tags
         }
     }
     requests.post(ANKI_CONNECT_URL, json=payload)
@@ -110,8 +106,7 @@ def run_tag_freq(deck, prefix, word=None, word_list=None):
         # Update tags for each note
         for note_id in note_ids:
             update_note_tags(note_id, [freq_tag], prefix)
-            print(f"Updated '{current_word}' with tag: {freq_tag}")
-
+        
 # For testing purposes
 if __name__ == "__main__":
     deck = "DE::Classes::B1-prep"
