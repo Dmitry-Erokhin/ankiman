@@ -10,6 +10,7 @@ FREQ_THRESHOLDS = {
     # Below moderate is considered 'low'
 }
 
+
 def fetch_cards(deck_name, word=None):
     """Fetch cards from the specified deck, optionally filtered by word."""
     query = f'deck:"{deck_name}"'
@@ -24,6 +25,7 @@ def fetch_cards(deck_name, word=None):
     response = requests.post(ANKI_CONNECT_URL, json=payload)
     return response.json()['result']
 
+
 def get_note_info(note_ids):
     """Get detailed information about notes."""
     payload = {
@@ -34,12 +36,14 @@ def get_note_info(note_ids):
     response = requests.post(ANKI_CONNECT_URL, json=payload)
     return response.json()['result']
 
+
 def get_frequency_tag(freq, prefix):
     """Determine frequency tag based on word frequency."""
     for level, threshold in FREQ_THRESHOLDS.items():
         if freq >= threshold:
             return f"{prefix}::{level}"
     return f"{prefix}::low"
+
 
 def update_note_tags(note_id, tags_to_add, prefix):
     """Update note tags, removing old frequency tags and adding new ones."""
@@ -71,10 +75,12 @@ def update_note_tags(note_id, tags_to_add, prefix):
     }
     requests.post(ANKI_CONNECT_URL, json=payload)
 
+
 def process_word(word, prefix):
     """Calculate frequency and determine appropriate tag for a word."""
     freq = word_frequency(word, 'de')
     return get_frequency_tag(freq, prefix)
+
 
 def run_tag_freq(deck, prefix, word=None, word_list=None):
     """Main function to process words and update frequency tags."""
@@ -105,3 +111,10 @@ def run_tag_freq(deck, prefix, word=None, word_list=None):
         for note_id in note_ids:
             update_note_tags(note_id, [freq_tag], prefix)
             print(f"Updated '{current_word}' with tag: {freq_tag}")
+
+# For testing purposes
+if __name__ == "__main__":
+    deck = "DE::Classes::B1-prep"
+    prefix = "freq"
+    word = "Ampel"
+    run_tag_freq(deck, prefix, word)

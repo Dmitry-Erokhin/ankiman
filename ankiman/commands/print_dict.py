@@ -34,4 +34,8 @@ def run_print_dict(deck):
         if "base_d" in fields:
             print(fields["base_d"].get("value", ""))
 
+# For testing purposes
+if __name__ == "__main__":
+    run_print_dict("DE::Classes::B1-prep")
+
 

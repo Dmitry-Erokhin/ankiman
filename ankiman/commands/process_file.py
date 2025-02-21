@@ -149,3 +149,11 @@ def main(file, deck, tags, batch):
 
 if __name__ == "__main__":
     main()
+
+# For testing purposes
+if __name__ == "__main__":
+    file_path = "temp/in.txt"
+    deck = "DE::Classes::B1-prep"
+    tags = ["test"]
+    batch_size = 50
+    run_process_file(file_path, deck, tags, batch_size)
