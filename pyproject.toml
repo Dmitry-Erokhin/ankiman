@@ -1,9 +1,22 @@
 [tool.poetry]
 name = "ankiman"
-version = "1.0.0"
+version = "1.0.2"
 description = "A CLI tool for managing German vocabulary in Anki"
-authors = ["Dmitry Erokhin <dmitry.erokhin@zalando.de>"]
+authors = ["Dmitry Erokhin <dmitry.erokhin@gmail.com>"]
+license = "MIT"
 readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: German",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Education :: Computer Aided Instruction (CAI)"
+]
+packages = [{include = "ankiman"}]
+repository = "https://github.com/Dmitry-Erokhin/ankiman"
 
 [tool.poetry.dependencies]
 python = "^3.9"

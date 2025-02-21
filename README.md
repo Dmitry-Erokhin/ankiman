@@ -29,7 +29,6 @@ python -m pipx ensurepath
 pipx install git+https://github.com/Dmitry-Erokhin/ankiman.git
 ```
 
-
 ## Note Format
 
 As a foundation [shared deck "B1 Wortliste DTZ Goethe"](https://ankiweb.net/shared/info/1586166030) is used therefore Ankiman is expecting fields provided by this deck:
@@ -41,3 +40,7 @@ As a foundation [shared deck "B1 Wortliste DTZ Goethe"](https://ankiweb.net/shar
 - `plural_d`: Plural form postfix (if applicable)
 - `s1`: Example sentence in German
 - `s1e`: Translation of the example sentence
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
