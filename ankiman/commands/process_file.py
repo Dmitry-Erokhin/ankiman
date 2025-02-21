@@ -11,29 +11,23 @@ Here is the list of German words:
 %words%. 
 
 You need to create CSV file from them with following columns (e.g. for words `Hauptbahnhof` and `aufhören`):
-- base: word itself
-- full: full form (for nouns with article and plural ending; for verbs - tenses)
-- plural_postfix: postfix in plural form (if applicable)
-- article: definitive article for nouns
-- translation: translation to English
+- full_d: full form  of the word (for nouns with article and plural ending; for verbs - tenses)
+- base_e: translation to English
+- base_d: word itself
+- artikel_d: definitive article for nouns
+- plural_d: postfix in plural form (if applicable)
 - -: empty column
-- -: empty column
-- -: empty column
-- example: example in German
-- example_translation: translation of example
-- -: empty column
-- -: empty column
-- -: empty column
-- -: empty column
+- s1: example in German
+- s1e: translation of example
 - tags: fixed value for each row: %tags%
 
 Provide output pipe(|) separated in a code block.
 
 Example:
 ```
-base|full|plural_postfix|article|translation|-|-|-|example|example_translation|-|-|-|-|tags
-Hauptbahnhof|der Hauptbahnhof, -e|-e|der|main train station|-|-|-|Treffen wir uns am Hauptbahnhof?|Do we meet at the main station?|||||%tags%
-aufhören|aufhören, hört auf, hörte auf, hat aufgehört|||to stop|-|-|-|Es hört nicht auf zu schneien.|It does not stop snowing.|||||%tags%
+full_d|base_e|base_d|artikel_d|plural_d|-|s1|s1e|tags
+der Hauptbahnhof, -e|main train station|Hauptbahnhof|der|-e||Treffen wir uns am Hauptbahnhof?|Do we meet at the main station?|%tags%
+aufhören, hört auf, hörte auf, hat aufgehört|to stop|aufhören||||Es hört nicht auf zu schneien.|It does not stop snowing.|%tags%
 ```"""
 
 def ensure_spacy_model():
@@ -75,12 +69,13 @@ def check_words_in_anki(words, deck):
         query = {
             "action": "findNotes",
             "version": 6,
-            "params": {"query": f"deck:{deck} base:{word}"}
+            "params": {"query": f"deck:{deck} base_d:{word}"}
         }
         response = requests.post(ANKI_CONNECT_URL, json=query)
-        if response.status_code == 200 and response.json().get('result'):
-            words_present.add(word)
-            words_absent.discard(word)
+        if response.status_code == 200:
+            if response.json().get('result'):
+                words_present.add(word)
+                words_absent.discard(word)
         else:
             print(f"Failed to check word: {word}")
     return list(words_present), list(words_absent)
