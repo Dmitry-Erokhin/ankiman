@@ -26,17 +26,14 @@ def read_pdf(file_path):
         text += page.get_text()
     return text
 
-
 def read_txt(file_path):
     """Read text from a TXT file using UTF-8 encoding."""
     with open(file_path, 'r', encoding='utf-8') as f:
         return f.read()
 
-
 def read_stdin():
     """Read text from standard input."""
     return sys.stdin.read()
-
 
 @click.group()
 @click.pass_context
@@ -48,7 +45,6 @@ def cli(ctx):
     """
     pass
 
-
 @cli.command("process-text")
 @click.argument('text', required=False)
 @click.option('-f', '--file', type=click.Path(exists=True), 
@@ -57,7 +53,8 @@ def cli(ctx):
               help='Name of the Anki deck where cards will be checked/tagged')
 @click.option('-t', '--tags', multiple=True, required=True, 
               help='Tags to add to the processed words. Can be specified multiple times')
-def process_text_cmd(text, file, deck, tags):
+@click.pass_context
+def process_text_cmd(ctx, text, file, deck, tags):
     """Process German text to extract vocabulary for Anki.
 
     This command extracts German words from text, checks if they exist in your Anki deck,
@@ -97,7 +94,7 @@ def process_text_cmd(text, file, deck, tags):
         # Process piped text from another command
         grep "wichtig" text.txt | ankiman process-text -d "German::Vocabulary" -t source::filtered
     """
-    ensure_anki_or_fail(cli)
+    ensure_anki_or_fail(ctx)
     
     # Determine text source - priority: direct text > file > stdin
     content = None
@@ -126,11 +123,11 @@ def process_text_cmd(text, file, deck, tags):
     print(f"Processing text from {source}")
     run_process_text(content, deck, tags)
 
-
 @cli.command("print-dict")
 @click.option('-d', '--deck', required=True, 
               help='Name of the Anki deck to extract words from')
-def print_dict_cmd(deck):
+@click.pass_context
+def print_dict_cmd(ctx, deck):
     """Print all base German words from an Anki deck.
 
     This command extracts and prints the base form (base_d field) of all words
@@ -140,9 +137,8 @@ def print_dict_cmd(deck):
     Example usage:
     ankiman print-dict -d "German::Vocabulary" > wordlist.txt
     """
-    ensure_anki_or_fail(cli)
+    ensure_anki_or_fail(ctx)
     run_print_dict(deck)
-
 
 @cli.command("tag-freq")
 @click.option('-d', '--deck', required=True, 
@@ -153,7 +149,8 @@ def print_dict_cmd(deck):
               help='Process a specific word instead of the entire deck')
 @click.option('--word-list', 
               help='Process multiple words (comma-separated) instead of the entire deck')
-def tag_freq_cmd(deck, prefix, word, word_list):
+@click.pass_context
+def tag_freq_cmd(ctx, deck, prefix, word, word_list):
     """Tag words with their frequency level in German.
 
     This command analyzes words in the deck and adds frequency tags (very-high,
@@ -173,9 +170,8 @@ def tag_freq_cmd(deck, prefix, word, word_list):
     Process multiple words:
     ankiman tag-freq -d "German::Vocabulary" --word-list "Haus,Auto,Buch"
     """
-    ensure_anki_or_fail(cli)
+    ensure_anki_or_fail(ctx)
     run_tag_freq(deck, prefix, word, word_list)
-
 
 if __name__ == "__main__":
     cli()
