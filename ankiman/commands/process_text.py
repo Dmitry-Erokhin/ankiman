@@ -74,7 +74,7 @@ def run_process_text(content, deck, tags):
     print(f"{len(words_present)} words present in Anki, {len(words_absent)} missing")
 
     add_tags_to_anki(words_present, tags)
-    print(f"Tagged {len(words_present)} words with tags: {tags.join(', ')}")
+    print(f"Tagged {len(words_present)} words with tags: {', '.join(tags)}")
     
     if words_absent:
         print(f"\nMissing words ({len(words_absent)}):")
