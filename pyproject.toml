@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ankiman"
-version = "1.3.2"
+version = "1.3.3"
 description = "A CLI tool for managing German vocabulary in Anki"
 authors = ["Dmitry Erokhin <dmitry.erokhin@gmail.com>"]
 license = "MIT"

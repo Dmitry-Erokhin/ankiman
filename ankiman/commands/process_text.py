@@ -48,7 +48,7 @@ def add_tags_to_anki(words_present, tags):
         query = {
             "action": "findNotes",
             "version": 6,
-            "params": {"query": f"base:{word}"}
+            "params": {"query": f"base_d:{word}"}
         }
         response = requests.post(ANKI_CONNECT_URL, json=query)
         note_ids = response.json().get('result') if response.status_code == 200 else []
